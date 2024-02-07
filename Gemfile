@@ -13,6 +13,8 @@ gem "puma", ">= 5.0"
 
 gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
+gem 'rswag'
+
 
 # Build JSON APIs with ease [https://github.com/rails/jbuilder]
 # gem "jbuilder"

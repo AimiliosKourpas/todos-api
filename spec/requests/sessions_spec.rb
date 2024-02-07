@@ -1,10 +1,10 @@
 require 'swagger_helper'
 
-RSpec.describe 'authentication', type: :request do
+RSpec.describe 'sessions', type: :request do
 
-  path '/auth/login' do
+  path '/logout' do
 
-    post('authenticate authentication') do
+    post('logout session') do
       response(200, 'successful') do
 
         after do |example|
