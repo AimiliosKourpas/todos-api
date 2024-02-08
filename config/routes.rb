@@ -13,5 +13,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   post 'auth/login', to: 'authentication#authenticate'
   post 'signup', to: 'users#create'
-  post '/logout', to: 'sessions#logout'
+  get 'auth/logout', to: 'sessions#logout'
 end

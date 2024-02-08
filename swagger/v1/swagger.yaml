@@ -1,208 +1,250 @@
----
 openapi: 3.0.1
 info:
-  title: API V1
+  title: Todo List API
   version: v1
-paths:
-  "/auth/login":
-    parameters:
-      - name: email
-        in: query
-        description: email
-        required: true
-        schema:
-          type: string
-      - name: password
-        in: query
-        description: password
-        required: true
-        schema:
-          type: string
-    post:
-      summary: authenticate authentication
-      responses:
-        "200":
-          description: successful
-  "/todos/{todo_id}/items":
-    parameters:
-      - name: todo_id
-        in: path
-        description: todo_id
-        required: true
-        schema:
-          type: string
-      - name: name
-        in: query
-        description: name
-        schema:
-          type: string
-      - name: done
-        in: query
-        description: done
-        schema:
-          type: boolean
-    get:
-      summary: list items
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-    post:
-      summary: create item
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-  "/todos/{todo_id}/items/{id}":
-    parameters:
-      - name: todo_id
-        in: path
-        description: todo_id
-        required: true
-        schema:
-          type: string
-      - name: id
-        in: path
-        description: id
-        schema:
-          type: string
-      - name: name
-        in: query
-        description: name
-        schema:
-          type: string
-      - name: done
-        in: query
-        description: done
-        schema:
-          type: boolean
-    get:
-      summary: show item
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
+  description: |
+    This API allows users to manage a list of todos with detailed todo items. 
+    It provides endpoints for user authentication, managing todos, and their associated items.
 
-    put:
-      summary: update item
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-    delete:
-      summary: delete item
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-  "/logout":
-    post:
-      summary: logout session
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-  "/todos":
-    parameters:
-      - name: title
-        in: query
-        description: title
-        schema:
-          type: string
-    get:
-      summary: list todos
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-    post:
-      summary: create todo
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-  "/todos/{id}":
-    parameters:
-      - name: id
-        in: path
-        description: id
-        required: true
-        schema:
-          type: string
-      - name: title
-        in: query
-        description: title
-        required: true
-        schema:
-          type: string
-    get:
-      summary: show todo
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-    put:
-      summary: update todo
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
-    delete:
-      summary: delete todo
-      responses:
-        "200":
-          description: successful
-      security:
-        - api_key: []
+paths:
   "/signup":
     parameters:
       - name: email
         in: query
-        description: email
+        description: Email of the user.
         required: true
         schema:
           type: string
       - name: name
         in: query
-        description: name
+        description: Name of the user.
         required: true
         schema:
           type: string
       - name: password
         in: query
-        description: password
+        description: Password for the user.
         required: true
         schema:
           type: string
       - name: password_confirmation
         in: query
-        description: password_confirmation
+        description: Password confirmation for the user.
         required: true
         schema:
           type: string
     post:
-      summary: create user
+      summary: Create User
+      description: |
+        Registers a new user account with the provided email, name, password, and password confirmation.
       responses:
         "200":
-          description: successful
-servers:
-  - url: http://{defaultHost}
-    variables:
-      defaultHost:
-        default: 127.0.0.1:3000
+          description: Successful user creation
+
+  "/auth/login":
+    parameters:
+      - name: email
+        in: query
+        description: Email of the user.
+        required: true
+        schema:
+          type: string
+      - name: password
+        in: query
+        description: Password for the user.
+        required: true
+        schema:
+          type: string
+    post:
+      summary: Authenticate User
+      description: |
+        Logs in a user by verifying the provided email and password.
+      responses:
+        "200":
+          description: Successful login
+
+  "/auth/logout":
+    get:
+      summary: Logout User
+      description: |
+        Simmulates a user logout by clearing the user's session.
+      responses:
+        "200":
+          description: Successful logout
+      security:
+        - api_key: []
+
+  "/todos":
+    parameters:
+      - name: title
+        in: query
+        description: Title of the todo.
+        schema:
+          type: string
+    get:
+      summary: List Todos
+      description: |
+        Retrieves a list of all todos and their items.
+      responses:
+        "200":
+          description: Successful retrieval
+      security:
+        - api_key: []
+
+    post:
+      summary: Create Todo
+      description: |
+        Creates a new todo with the specified title.
+      responses:
+        "200":
+          description: Successful todo creation
+      security:
+        - api_key: []
+
+  "/todos/{id}":
+    parameters:
+      - name: id
+        in: path
+        description: The ID of the todo.
+        required: true
+        schema:
+          type: string
+      - name: title
+        in: query
+        description: Title of the todo.
+        schema:
+          type: string
+    get:
+      summary: Show Todo
+      description: |
+        Retrieves details of a specific todo identified by its ID.
+      responses:
+        "200":
+          description: Successful retrieval
+      security:
+        - api_key: []
+
+    put:
+      summary: Update Todo
+      description: |
+        Updates the details of a todo identified by its ID.
+      responses:
+        "200":
+          description: Successful update
+      security:
+        - api_key: []
+
+    delete:
+      summary: Delete Todo
+      description: |
+        Deletes a todo and its associated items identified by its ID.
+      responses:
+        "200":
+          description: Successful deletion
+      security:
+        - api_key: []
+
+  "/todos/{todo_id}/items":
+    parameters:
+      - name: todo_id
+        in: path
+        description: The ID of the todo.
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Name of the todo item.
+        schema:
+          type: string
+      - name: done
+        in: query
+        description: Completion status of the todo item.
+        schema:
+          type: boolean
+    get:
+      summary: List Todo Items
+      description: |
+        Retrieves a list of items associated with a specific todo identified by its ID.
+      responses:
+        "200":
+          description: Successful retrieval
+      security:
+        - api_key: []
+
+    post:
+      summary: Create Todo Item
+      description: |
+        Creates a new item associated with a todo identified by its ID.
+      responses:
+        "200":
+          description: Successful item creation
+      security:
+        - api_key: []
+
+  "/todos/{todo_id}/items/{id}":
+    parameters:
+      - name: todo_id
+        in: path
+        description: The ID of the todo.
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: The ID of the todo item.
+        required: true
+        schema:
+          type: string
+      - name: name
+        in: query
+        description: Name of the todo item.
+        schema:
+          type: string
+      - name: done
+        in: query
+        description: Completion status of the todo item.
+        schema:
+          type: boolean
+    get:
+      summary: Show Todo Item
+      description: |
+        Retrieves details of a specific todo item identified by its ID.
+      responses:
+        "200":
+          description: Successful retrieval
+      security:
+        - api_key: []
+
+    put:
+      summary: Update Todo Item
+      description: |
+        Updates the details of a todo item identified by its ID.
+      responses:
+        "200":
+          description: Successful update
+      security:
+        - api_key: []
+
+    delete:
+      summary: Delete Todo Item
+      description: |
+        Deletes a todo item identified by its ID.
+      responses:
+        "200":
+          description: Successful deletion
+      security:
+        - api_key: []
+
 components:
   securitySchemes:
     api_key:
       type: apiKey
       name: Authorization
       in: header
+
+servers:
+  - url: http://{defaultHost}
+    variables:
+      defaultHost:
+        default: 127.0.0.1:3000
