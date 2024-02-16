@@ -162,15 +162,6 @@ paths:
         description: Completion status of the todo item.
         schema:
           type: boolean
-    get:
-      summary: List Todo Items
-      description: |
-        Retrieves a list of items associated with a specific todo identified by its ID.
-      responses:
-        "200":
-          description: Successful retrieval
-      security:
-        - api_key: []
 
     post:
       summary: Create Todo Item
